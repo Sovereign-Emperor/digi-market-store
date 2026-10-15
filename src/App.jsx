@@ -1,35 +1,47 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import Brand from './components/Brand';
-import LibraryCard from './components/LibraryCard';
 import SearchInput from './components/SearchInput';
-import Section from './components/Section';
 import Sidebar from './components/Sidebar';
-import { accountNavigation, categories, newArrivals, primaryNavigation, resources } from './data/library';
+import { AdminPage, CatalogPage, CategoriesPage, DashboardPage, LandingPage, ReaderPage, ResourceDetail, SearchPage, VideoPage } from './components/Pages';
+import { accountNavigation, primaryNavigation, resources } from './data/library';
 
-function App() {
-  const [query, setQuery] = useState('');
+const routeMap = { Books: 'catalog', Courses: 'courses', Categories: 'categories', Dashboard: 'dashboard', 'Search Results': 'search', 'Manage Resources': 'admin', Videos: 'video', 'My Library': 'dashboard' };
+
+export default function App() {
+  const [route, setRoute] = useState('home');
   const [activeItem, setActiveItem] = useState('Home');
-  const [showAllCategories, setShowAllCategories] = useState(false);
-  const [newsletterStatus, setNewsletterStatus] = useState('idle');
   const [selectedResource, setSelectedResource] = useState(null);
-
-  const filteredResources = useMemo(() => resources.filter((resource) => Object.values(resource).join(' ').toLowerCase().includes(query.trim().toLowerCase())), [query]);
-  const visibleCategories = showAllCategories ? categories : categories.slice(0, 6);
-
-  function subscribe(event) { event.preventDefault(); setNewsletterStatus('subscribed'); }
-
-  return <div className="app-shell">
-    <Sidebar primaryItems={primaryNavigation} accountItems={accountNavigation} activeItem={activeItem} onNavigate={setActiveItem} />
-    <main><header className="topbar"><button className="menu" aria-label="Open menu">☰</button><div className="mobile-brand"><Brand /></div><SearchInput query={query} onQueryChange={setQuery} /><div className="top-actions"><button className="icon-btn" aria-label="Bookmarks">♧</button><button className="icon-btn" aria-label="Notifications">♧</button><button className="login">Login</button><button className="signup">Sign Up</button></div></header>
-      <section className="hero"><div className="hero-copy"><h1>Your Ultimate<br /><em>Digital Library</em></h1><p>Books, Courses, Tutorials, Source Code, PDFs,<br />Templates & more. All in One Place.</p><div className="hero-search"><SearchInput query={query} onQueryChange={setQuery} /><button>Search</button></div><div className="popular">Popular: <span>Python</span><span>JavaScript</span><span>Web Development</span><span>Machine Learning</span></div></div><div className="hero-art" aria-hidden="true"><div className="spark s1">✦</div><div className="spark s2">✧</div><div className="royal-crown">♛</div><div className="book book-a" /><div className="book book-b" /><div className="book book-c" /></div><div className="stats">{[['10K+', 'Resources'], ['50+', 'Categories'], ['5K+', 'Users'], ['100K+', 'Downloads']].map(([value, label]) => <div key={label}><b>{value}</b><span>{label}</span></div>)}</div></section>
-      <Section title="Top Categories" actionLabel={showAllCategories ? 'Show Less' : 'View All'} onAction={() => setShowAllCategories((show) => !show)}><div className="category-grid">{visibleCategories.map((category) => <button className="category" key={category.name}><span className={`cat-icon ${category.color}`}>{category.icon}</span><b>{category.name}</b><small>{category.count} Resources</small></button>)}</div></Section>
-      <Section title="Trending Resources" onAction={() => setQuery('')}><div className="resource-grid">{filteredResources.map((resource) => <LibraryCard resource={resource} key={resource.title} onSelect={setSelectedResource} />)}</div>{query && !filteredResources.length ? <p className="empty">No resources match “{query}”. Try Python, React, or Design.</p> : null}</Section>
-      <Section title="New Arrivals" onAction={() => setSelectedResource(newArrivals[0])}><div className="resource-grid">{newArrivals.map((resource) => <LibraryCard resource={resource} key={resource.title} onSelect={setSelectedResource} />)}</div></Section>
-      <section className="newsletter"><div><h2>Stay Updated</h2><p>Subscribe to get the latest resources, courses & updates</p></div><form onSubmit={subscribe}><input aria-label="Email address" type="email" required placeholder="Enter your email" /><button>{newsletterStatus === 'subscribed' ? 'Subscribed ✓' : 'Subscribe'}</button></form><span className="paper">✉</span></section>
-      <footer><Brand /><p>Empowering minds. Building the future.</p><div><a href="#about">About</a><a href="#contact">Contact</a><a href="#privacy">Privacy</a><a href="#terms">Terms</a></div></footer>
+  const [search, setSearch] = useState('');
+  const [authOpen, setAuthOpen] = useState(false);
+  function navigate(label) { setActiveItem(label); setRoute(routeMap[label] || (label === 'Home' ? 'home' : 'catalog')); }
+  function select(resource) { setSelectedResource(resource); setRoute('detail'); }
+  function backToLibrary() { setSelectedResource(null); setRoute('catalog'); setActiveItem('Books'); }
+  function renderPage() {
+    if (route === 'detail') return <ResourceDetail resource={selectedResource || resources[0]} onRead={() => setRoute('reader')} onBack={backToLibrary} />;
+    if (route === 'reader') return <ReaderPage resource={selectedResource || resources[0]} onBack={backToLibrary} />;
+    if (route === 'video') return <VideoPage onBack={() => navigate('Courses')} />;
+    if (route === 'categories') return <CategoriesPage onNavigate={navigate} />;
+    if (route === 'catalog') return <CatalogPage type="Books" onSelect={select} />;
+    if (route === 'courses') return <CatalogPage type="Courses" onSelect={select} />;
+    if (route === 'search') return <SearchPage initialQuery={search} onSelect={select} />;
+    if (route === 'dashboard') return <DashboardPage onNavigate={navigate} />;
+    if (route === 'admin') return <AdminPage />;
+    return <LandingPage onNavigate={navigate} onSelect={select} />;
+  }
+  return <div className={route === 'reader' ? 'reader-shell' : 'app-shell'}>
+    {route !== 'reader' && <Sidebar primaryItems={[...primaryNavigation, ['▦', 'Categories']]} accountItems={[...accountNavigation, ['⚙', 'Dashboard'], ['⌘', 'Manage Resources']]} activeItem={activeItem} onNavigate={navigate} />}
+    <main className={route === 'reader' ? 'reader-main' : ''}>
+      {route !== 'reader' && <header className="topbar"><button className="menu" aria-label="Open menu">☰</button><div className="mobile-brand"><Brand /></div><SearchInput query={search} onQueryChange={setSearch} /><button className="top-search" onClick={() => navigate('Search Results')}>⌕</button><div className="top-actions"><button className="icon-btn" aria-label="Bookmarks">♧</button><button className="icon-btn" aria-label="Notifications">♧</button><button className="login" onClick={() => setAuthOpen(true)}>Login</button><button className="signup" onClick={() => setAuthOpen(true)}>Sign Up</button></div></header>}
+      {renderPage()}
+      {route === 'home' && <footer><Brand /><p>Empowering minds. Building the future.</p><div><a href="#about">About</a><a href="#contact">Contact</a><a href="#privacy">Privacy</a><a href="#terms">Terms</a></div></footer>}
     </main>
-    {selectedResource && <div className="modal-backdrop" onClick={() => setSelectedResource(null)}><article className="resource-modal" onClick={(event) => event.stopPropagation()}><button className="modal-close" onClick={() => setSelectedResource(null)} aria-label="Close resource detail">×</button><span>{selectedResource.type}</span><h2>{selectedResource.title}</h2><p>{selectedResource.subtitle} · {selectedResource.rating}</p><button className="signup" onClick={() => setSelectedResource(null)}>Add to Library</button></article></div>}
+    {authOpen && <AuthModal onClose={() => setAuthOpen(false)} onComplete={() => { setAuthOpen(false); navigate('Dashboard'); }} />}
   </div>;
 }
 
-export default App;
+function AuthModal({ onClose, onComplete }) {
+  const [mode, setMode] = useState('login');
+  const [notice, setNotice] = useState('');
+  function submit(event) { event.preventDefault(); setNotice(mode === 'login' ? 'Welcome back.' : 'Account created.'); setTimeout(onComplete, 450); }
+  return <div className="modal-backdrop" onClick={onClose}><section className="auth-modal" onClick={(event) => event.stopPropagation()}><button className="modal-close" onClick={onClose}>×</button><aside><Brand /><h2>Empowering minds.</h2><p>Building the future.</p></aside><form onSubmit={submit}><h1>{mode === 'login' ? 'Welcome Back!' : 'Create Account'}</h1><p>{mode === 'login' ? 'Login to continue your account' : 'Join thousands of learners today'}</p>{mode === 'signup' && <input required placeholder="Full name" />}<input required type="email" placeholder="Email address" /><input required type="password" placeholder="Password" /><label className="terms"><input type="checkbox" required={mode === 'signup'} /> Remember me</label><button className="signup">{mode === 'login' ? 'Login' : 'Sign Up'}</button>{notice && <small className="form-notice">{notice}</small>}<p className="mode-toggle">{mode === 'login' ? "Don't have an account?" : 'Already have an account?'} <button type="button" onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}>{mode === 'login' ? 'Sign Up' : 'Login'}</button></p></form></section></div>;
+}
