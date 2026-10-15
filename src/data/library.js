@@ -1,0 +1,31 @@
+export const resources = [
+  { title: 'Python Crash Course', subtitle: '3rd Edition', type: 'PDF', art: 'python', symbol: '🐍', rating: '4.8 (125)', access: 'Free' },
+  { title: 'React — The Complete Guide', subtitle: '2024', type: 'Course', art: 'react', symbol: '⚛', rating: '4.9 (245)', access: 'Premium' },
+  { title: 'JavaScript Algorithms', subtitle: 'Handbook', type: 'PDF', art: 'javascript', symbol: '⌁', rating: '4.7 (89)', access: 'Free' },
+  { title: 'Full Stack Web', subtitle: 'Development Bootcamp', type: 'Course', art: 'fullstack', symbol: '◈', rating: '4.8 (145)', access: 'Premium' },
+  { title: '100+ Python Projects', subtitle: 'with Source Code', type: 'ZIP', art: 'projects', symbol: '✦', rating: '4.8 (110)', access: 'Free' },
+];
+
+export const newArrivals = [
+  { title: 'Machine Learning', subtitle: 'A-Z Handbook', type: 'PDF', art: 'machine', symbol: '▦', rating: '4.9 (76)', access: 'Free' },
+  { title: 'UI/UX Design', subtitle: 'Fundamentals', type: 'Course', art: 'ux', symbol: '▤', rating: '4.7 (102)', access: 'Premium' },
+  { title: 'Linux Command Line', subtitle: 'Handbook', type: 'PDF', art: 'linux', symbol: '›_', rating: '4.8 (96)', access: 'Free' },
+  { title: 'Cyber Security', subtitle: 'Basics', type: 'Course', art: 'cyber', symbol: '◌', rating: '4.6 (54)', access: 'Free' },
+  { title: 'Data Structures', subtitle: '& Algorithms', type: 'PDF', art: 'data', symbol: '⌘', rating: '4.9 (77)', access: 'Premium' },
+];
+
+export const categories = [
+  { icon: '⌘', name: 'Programming', count: '2,410', color: 'violet' },
+  { icon: '▣', name: 'Web Development', count: '1,980', color: 'blue' },
+  { icon: '♧', name: 'Data Science', count: '980', color: 'green' },
+  { icon: '✂', name: 'Design', count: '1,210', color: 'orange' },
+  { icon: '▤', name: 'Business', count: '1,100', color: 'gold' },
+  { icon: '✺', name: 'AI & ML', count: '1,180', color: 'teal' },
+];
+
+export const primaryNavigation = [
+  ['⌂', 'Home'], ['▤', 'Books'], ['▱', 'Courses'], ['▷', 'Videos'], ['▧', 'PDFs'],
+  ['‹›', 'Source Code'], ['◇', 'Templates'], ['✧', 'AI Prompts'], ['⚒', 'Tools'], ['▣', 'Store'], ['◎', 'Community'],
+];
+
+export const accountNavigation = [['▦', 'My Library'], ['♧', 'Bookmarks'], ['⇩', 'Downloads'], ['◷', 'History'], ['⚙', 'Settings']];

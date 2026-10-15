@@ -1,0 +1,7 @@
+.resource-card { padding: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.modal-backdrop { position: fixed; z-index: 10; inset: 0; display: grid; place-items: center; padding: 20px; background: #02080ccc; }
+.resource-modal { position: relative; width: min(390px, 100%); padding: 30px; border: 1px solid #3a4a52; border-radius: 10px; background: #0b171e; box-shadow: 0 28px 90px #000; }
+.resource-modal > span { color: #f7bd27; font-size: 10px; letter-spacing: .09em; text-transform: uppercase; }
+.resource-modal h2 { margin: 12px 0 8px; font-size: 24px; }
+.resource-modal p { margin: 0 0 22px; color: #9dabb1; }
+.modal-close { position: absolute; top: 10px; right: 14px; border: 0; background: none; color: #c8d0d2; font-size: 24px; cursor: pointer; }
