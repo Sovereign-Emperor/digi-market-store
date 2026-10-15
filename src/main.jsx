@@ -5,6 +5,7 @@ import App from './App';
 import { LibraryProvider } from './context/LibraryContext';
 import '../assets/style.css';
 import './app.css';
+import './responsive.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
