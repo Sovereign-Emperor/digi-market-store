@@ -9,6 +9,10 @@ import './responsive.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter><LibraryProvider><App /></LibraryProvider></BrowserRouter>
+    <BrowserRouter>
+      <LibraryProvider>
+        <App />
+      </LibraryProvider>
+    </BrowserRouter>
   </StrictMode>,
 );
