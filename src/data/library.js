@@ -1,17 +1,97 @@
 export const resources = [
-  { title: 'Python Crash Course', subtitle: '3rd Edition', type: 'PDF', art: 'python', symbol: '🐍', rating: '4.8 (125)', access: 'Free' },
-  { title: 'React — The Complete Guide', subtitle: '2024', type: 'Course', art: 'react', symbol: '⚛', rating: '4.9 (245)', access: 'Premium' },
-  { title: 'JavaScript Algorithms', subtitle: 'Handbook', type: 'PDF', art: 'javascript', symbol: '⌁', rating: '4.7 (89)', access: 'Free' },
-  { title: 'Full Stack Web', subtitle: 'Development Bootcamp', type: 'Course', art: 'fullstack', symbol: '◈', rating: '4.8 (145)', access: 'Premium' },
-  { title: '100+ Python Projects', subtitle: 'with Source Code', type: 'ZIP', art: 'projects', symbol: '✦', rating: '4.8 (110)', access: 'Free' },
+  {
+    title: 'Python Crash Course',
+    subtitle: '3rd Edition',
+    type: 'PDF',
+    art: 'python',
+    symbol: '🐍',
+    rating: '4.8 (125)',
+    access: 'Free',
+  },
+  {
+    title: 'React — The Complete Guide',
+    subtitle: '2024',
+    type: 'Course',
+    art: 'react',
+    symbol: '⚛',
+    rating: '4.9 (245)',
+    access: 'Premium',
+  },
+  {
+    title: 'JavaScript Algorithms',
+    subtitle: 'Handbook',
+    type: 'PDF',
+    art: 'javascript',
+    symbol: '⌁',
+    rating: '4.7 (89)',
+    access: 'Free',
+  },
+  {
+    title: 'Full Stack Web',
+    subtitle: 'Development Bootcamp',
+    type: 'Course',
+    art: 'fullstack',
+    symbol: '◈',
+    rating: '4.8 (145)',
+    access: 'Premium',
+  },
+  {
+    title: '100+ Python Projects',
+    subtitle: 'with Source Code',
+    type: 'ZIP',
+    art: 'projects',
+    symbol: '✦',
+    rating: '4.8 (110)',
+    access: 'Free',
+  },
 ];
 
 export const newArrivals = [
-  { title: 'Machine Learning', subtitle: 'A-Z Handbook', type: 'PDF', art: 'machine', symbol: '▦', rating: '4.9 (76)', access: 'Free' },
-  { title: 'UI/UX Design', subtitle: 'Fundamentals', type: 'Course', art: 'ux', symbol: '▤', rating: '4.7 (102)', access: 'Premium' },
-  { title: 'Linux Command Line', subtitle: 'Handbook', type: 'PDF', art: 'linux', symbol: '›_', rating: '4.8 (96)', access: 'Free' },
-  { title: 'Cyber Security', subtitle: 'Basics', type: 'Course', art: 'cyber', symbol: '◌', rating: '4.6 (54)', access: 'Free' },
-  { title: 'Data Structures', subtitle: '& Algorithms', type: 'PDF', art: 'data', symbol: '⌘', rating: '4.9 (77)', access: 'Premium' },
+  {
+    title: 'Machine Learning',
+    subtitle: 'A-Z Handbook',
+    type: 'PDF',
+    art: 'machine',
+    symbol: '▦',
+    rating: '4.9 (76)',
+    access: 'Free',
+  },
+  {
+    title: 'UI/UX Design',
+    subtitle: 'Fundamentals',
+    type: 'Course',
+    art: 'ux',
+    symbol: '▤',
+    rating: '4.7 (102)',
+    access: 'Premium',
+  },
+  {
+    title: 'Linux Command Line',
+    subtitle: 'Handbook',
+    type: 'PDF',
+    art: 'linux',
+    symbol: '›_',
+    rating: '4.8 (96)',
+    access: 'Free',
+  },
+  {
+    title: 'Cyber Security',
+    subtitle: 'Basics',
+    type: 'Course',
+    art: 'cyber',
+    symbol: '◌',
+    rating: '4.6 (54)',
+    access: 'Free',
+  },
+  {
+    title: 'Data Structures',
+    subtitle: '& Algorithms',
+    type: 'PDF',
+    art: 'data',
+    symbol: '⌘',
+    rating: '4.9 (77)',
+    access: 'Premium',
+  },
 ];
 
 export const categories = [
@@ -24,8 +104,23 @@ export const categories = [
 ];
 
 export const primaryNavigation = [
-  ['⌂', 'Home'], ['▤', 'Books'], ['▱', 'Courses'], ['▷', 'Videos'], ['▧', 'PDFs'],
-  ['‹›', 'Source Code'], ['◇', 'Templates'], ['✧', 'AI Prompts'], ['⚒', 'Tools'], ['▣', 'Store'], ['◎', 'Community'],
+  ['⌂', 'Home'],
+  ['▤', 'Books'],
+  ['▱', 'Courses'],
+  ['▷', 'Videos'],
+  ['▧', 'PDFs'],
+  ['‹›', 'Source Code'],
+  ['◇', 'Templates'],
+  ['✧', 'AI Prompts'],
+  ['⚒', 'Tools'],
+  ['▣', 'Store'],
+  ['◎', 'Community'],
 ];
 
-export const accountNavigation = [['▦', 'My Library'], ['♧', 'Bookmarks'], ['⇩', 'Downloads'], ['◷', 'History'], ['⚙', 'Settings']];
+export const accountNavigation = [
+  ['▦', 'My Library'],
+  ['♧', 'Bookmarks'],
+  ['⇩', 'Downloads'],
+  ['◷', 'History'],
+  ['⚙', 'Settings'],
+];
