@@ -7,6 +7,8 @@ import {
 } from 'react';
 import { libraryRepository } from '../lib/storage';
 
+// Shared application state for the user's saved library, bookmarks, downloads, and
+// reading progress. Components can access it without prop drilling through the tree.
 const LibraryContext = createContext(null);
 
 export function LibraryProvider({ children }) {

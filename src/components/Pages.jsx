@@ -7,6 +7,7 @@ import EmptyState from './ui/EmptyState';
 import ProgressBar from './ui/ProgressBar';
 
 export function LandingPage({ onNavigate, onSelect }) {
+  // Local search keeps the hero prompt responsive without leaving the home screen.
   const [query, setQuery] = useState('');
   const matches = useMemo(
     () => resources.filter((item) => item.title.toLowerCase().includes(query.toLowerCase())),
@@ -126,6 +127,8 @@ export function CategoriesPage({ onNavigate }) {
 }
 
 export function CatalogPage({ type, onSelect }) {
+  // Catalogs tailor their list based on the page type so the same component can render
+  // books or course collections without duplicating large blocks of markup.
   const list =
     type === 'Courses'
       ? [...resources.slice(1), ...newArrivals.slice(1, 4)]
@@ -174,6 +177,8 @@ export function CatalogPage({ type, onSelect }) {
 }
 
 export function ResourceDetail({ resource, onRead, onBack }) {
+  // The detail view reads the current library state so the same resource can be toggled in
+  // and out of the user's saved or downloaded collections without leaving the page.
   const { library, downloads, toggleSaved, download } = useLibrary();
   const id = resource.title;
   const saved = library.includes(id);
@@ -256,6 +261,8 @@ export function ResourceDetail({ resource, onRead, onBack }) {
 }
 
 export function ReaderPage({ resource, onBack }) {
+  // Reading progress is stored per resource so a user can resume where they left off when
+  // they reopen a book or course later.
   const { progress, saveProgress, toggleBookmark, bookmarks } = useLibrary();
   const [page, setPage] = useState(progress[resource.title] || 54);
 
@@ -324,6 +331,8 @@ export function ReaderPage({ resource, onBack }) {
 }
 
 export function VideoPage({ onBack }) {
+  // Video lessons track playback progress separately from book progress so the learner can
+  // keep their place in course content without interfering with reading sessions.
   const { progress, saveProgress } = useLibrary();
   const [playing, setPlaying] = useState(false);
   const [lesson, setLesson] = useState(0);

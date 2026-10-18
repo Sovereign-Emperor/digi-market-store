@@ -31,7 +31,12 @@ import {
 } from './data/library';
 
 
+// Combine the curated library and new arrivals so route-based resource lookup works
+// across both sets of catalog content.
 const allResources = [...resources, ...newArrivals];
+
+// Convert a resource title into a clean URL slug so the detail page can be linked
+// and bookmarked consistently across the app.
 const itemPath = (item) =>
   `/resource/${item.title
     .toLowerCase()
@@ -45,7 +50,11 @@ function AppShell() {
   const [authOpen, setAuthOpen] = useState(false);
   const { user, signOut } = useLibrary();
 
+  // Reader pages use a full-screen layout without the app shell chrome, so we switch
+  // between the normal navigation experience and the reading view based on the URL.
   const readerMode = location.pathname.startsWith('/reader');
+
+  // Highlight the currently active navigation item for the sidebar based on the route.
   const activeItem = location.pathname.includes('courses')
     ? 'Courses'
     : location.pathname.includes('categories')
@@ -58,6 +67,8 @@ function AppShell() {
             ? 'Books'
             : 'Home';
 
+  // A small route map keeps navigation labels and target URLs in one place, making it
+  // easier to expand the app without scattering route strings throughout components.
   const navigation = (label) => {
     const links = {
       Home: '/',
@@ -72,6 +83,8 @@ function AppShell() {
     navigate(links[label] || '/books');
   };
 
+  // Resource selection and search submission keep the viewport in sync with the current
+  // URL while preserving the user’s navigation flow through the catalog.
   const select = (item) => navigate(itemPath(item));
   const submitSearch = () => navigate(`/search?q=${encodeURIComponent(query)}`);
 
@@ -179,6 +192,8 @@ function AppShell() {
   );
 }
 
+// Resolve a slug back to its matching resource entry so the detail and reader views can
+// load the correct catalog item even when URLs are generated from the human-readable title.
 function findResource(slug) {
   return allResources.find((item) => itemPath(item).endsWith(slug)) || resources[0];
 }
