@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Navigate,
   Route,
@@ -54,6 +54,11 @@ function AppShell() {
   const [authOpen, setAuthOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, signOut } = useLibrary();
+
+  useEffect(() => {
+    document.body.classList.toggle('drawer-open', sidebarOpen);
+    return () => document.body.classList.remove('drawer-open');
+  }, [sidebarOpen]);
 
   // Reader pages use a full-screen layout without the app shell chrome, so we switch
   // between the normal navigation experience and the reading view based on the URL.
@@ -127,7 +132,7 @@ function AppShell() {
       <main className={readerMode ? 'reader-main' : ''}>
         {!readerMode && (
           <header className="topbar">
-            <button className="menu" onClick={() => setSidebarOpen(true)} aria-label="Open navigation">
+            <button className="menu" onClick={() => setSidebarOpen(true)} aria-label="Open navigation" aria-expanded={sidebarOpen} aria-controls="primary-navigation">
               ☰
             </button>
             <div className="mobile-brand">

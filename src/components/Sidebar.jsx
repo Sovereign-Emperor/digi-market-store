@@ -35,7 +35,7 @@ export default function Sidebar({
   };
 
   return (
-    <aside className={`sidebar ${isOpen ? 'is-open' : ''}`} aria-label="Primary navigation">
+    <aside id="primary-navigation" className={`sidebar ${isOpen ? 'is-open' : ''}`} aria-label="Primary navigation">
       <div className="sidebar-head">
         <Brand />
         <button className="sidebar-close" onClick={onClose} aria-label="Close navigation">
