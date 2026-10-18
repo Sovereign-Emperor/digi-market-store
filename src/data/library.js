@@ -1,3 +1,5 @@
+// This is the catalog seed data for the app. It defines the available resources, their labels,
+// and the metadata used to render cards, filters, and detail pages.
 export const resources = [
   {
     title: 'Python Crash Course',

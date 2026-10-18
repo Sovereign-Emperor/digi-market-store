@@ -1,5 +1,7 @@
 import Brand from './Brand';
 
+// This helper renders a list of nav buttons. It was separated so both the main menu and the
+// account menu can share the same button pattern and active-state styling.
 function NavigationList({ items, activeItem, onNavigate }) {
   return (
     <nav>
@@ -17,6 +19,8 @@ function NavigationList({ items, activeItem, onNavigate }) {
   );
 }
 
+// The sidebar is the main app navigation. It combines the brand, primary links, and account
+// links into one panel, then closes itself after a click so it behaves like a mobile menu.
 export default function Sidebar({
   primaryItems,
   accountItems,

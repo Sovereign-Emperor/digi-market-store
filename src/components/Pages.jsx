@@ -6,6 +6,8 @@ import { useLibrary } from '../context/LibraryContext';
 import EmptyState from './ui/EmptyState';
 import ProgressBar from './ui/ProgressBar';
 
+// This is the home page for the digital library. It combines a hero banner, category buttons,
+// trending items, and a quick search so users can start exploring immediately.
 export function LandingPage({ onNavigate, onSelect }) {
   // Local search keeps the hero prompt responsive without leaving the home screen.
   const [query, setQuery] = useState('');
@@ -99,6 +101,8 @@ export function LandingPage({ onNavigate, onSelect }) {
   );
 }
 
+// This page lists all categories in a larger format. It helps users browse by topic instead of
+// searching by title, which is useful when they know what they want to learn.
 export function CategoriesPage({ onNavigate }) {
   return (
     <Page title="All Categories" crumb="Home › Categories">
@@ -126,6 +130,8 @@ export function CategoriesPage({ onNavigate }) {
   );
 }
 
+// CatalogPage is a reusable listing screen for all books or courses. It filters the same dataset
+// by a selected access type or resource category while keeping the page structure identical.
 export function CatalogPage({ type, onSelect }) {
   // Catalogs tailor their list based on the page type so the same component can render
   // books or course collections without duplicating large blocks of markup.
@@ -176,6 +182,8 @@ export function CatalogPage({ type, onSelect }) {
   );
 }
 
+// ResourceDetail displays the full information for one specific item. It surfaces the title,
+// metadata, action buttons, and supporting explanation so a user can decide whether to read or save it.
 export function ResourceDetail({ resource, onRead, onBack }) {
   // The detail view reads the current library state so the same resource can be toggled in
   // and out of the user's saved or downloaded collections without leaving the page.
@@ -260,6 +268,8 @@ export function ResourceDetail({ resource, onRead, onBack }) {
   );
 }
 
+// ReaderPage is the full-screen reading view. It shows content and lets the user move through a
+// resource while saving progress to the library context for later resumes.
 export function ReaderPage({ resource, onBack }) {
   // Reading progress is stored per resource so a user can resume where they left off when
   // they reopen a book or course later.
@@ -330,6 +340,8 @@ export function ReaderPage({ resource, onBack }) {
   );
 }
 
+// VideoPage renders a mock course-player layout. It allows lesson selection and play/pause
+// toggling while simulating progress updates for a learner following a course sequence.
 export function VideoPage({ onBack }) {
   // Video lessons track playback progress separately from book progress so the learner can
   // keep their place in course content without interfering with reading sessions.
@@ -394,6 +406,8 @@ export function VideoPage({ onBack }) {
   );
 }
 
+// SearchPage gives users a dedicated search screen where they can narrow results by keyword and
+// content type. This is the primary screen for search-driven discovery in the app.
 export function SearchPage({ initialQuery, onSelect }) {
   const [query, setQuery] = useState(initialQuery || 'python');
   const [kind, setKind] = useState('All');
@@ -459,6 +473,8 @@ export function SearchPage({ initialQuery, onSelect }) {
   );
 }
 
+// DashboardPage summarizes progress and recent activity for returning users. It gives a quick
+// overview of what they are learning and what they have interacted with recently.
 export function DashboardPage({ onNavigate }) {
   return (
     <Page title="Welcome back, Enock Atikpo 👋" crumb="Dashboard">
@@ -509,6 +525,8 @@ export function DashboardPage({ onNavigate }) {
   );
 }
 
+// AdminPage is a mock management dashboard. It presents aggregate stats and a simple top
+// resources table to emulate the kind of administration panel a content platform would need.
 export function AdminPage() {
   return (
     <Page title="Admin Dashboard" crumb="Admin Panel">
@@ -554,6 +572,8 @@ export function AdminPage() {
   );
 }
 
+// Page is a shared page shell that standardizes the breadcrumb, section title, and content area
+// across the app so each page has the same visual structure.
 function Page({ title, crumb, children }) {
   return (
     <section className="page">

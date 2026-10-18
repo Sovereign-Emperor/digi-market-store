@@ -1,3 +1,5 @@
+// This card renders one resource tile in the catalog. It keeps the click handler simple so
+// selecting a book or course navigates to the detail view without extra state management.
 export default function LibraryCard({ resource, onSelect }) {
   return (
     <button
@@ -12,6 +14,8 @@ export default function LibraryCard({ resource, onSelect }) {
         <small>{resource.subtitle}</small>
       </div>
 
+      {/* The footer row shows the rating and access level so users can quickly tell whether a
+      resource is free or premium before opening it. */}
       <div className="resource-info">
         <div>
           <span className="star">★</span> {resource.rating}

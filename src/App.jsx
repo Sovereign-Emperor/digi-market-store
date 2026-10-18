@@ -33,6 +33,8 @@ import {
 
 // Combine the curated library and new arrivals so route-based resource lookup works
 // across both sets of catalog content.
+// Combine the content from the library list and the new arrivals list so the app can resolve
+// any resource by title from either source when building links or reading details.
 const allResources = [...resources, ...newArrivals];
 
 // Convert a resource title into a clean URL slug so the detail page can be linked
@@ -43,6 +45,8 @@ const itemPath = (item) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '')}`;
 
+// The app shell builds the overall layout: sidebar, header, routed content area, and auth
+// overlay. It keeps the main navigation and page rendering logic in one place.
 function AppShell() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -69,6 +73,8 @@ function AppShell() {
 
   // A small route map keeps navigation labels and target URLs in one place, making it
   // easier to expand the app without scattering route strings throughout components.
+  // This small route map lets labels from the sidebar and buttons resolve to the correct URL,
+  // which keeps navigation consistent even when labels are reused across pages.
   const navigation = (label) => {
     const links = {
       Home: '/',
@@ -85,6 +91,8 @@ function AppShell() {
 
   // Resource selection and search submission keep the viewport in sync with the current
   // URL while preserving the user’s navigation flow through the catalog.
+  // Clicking a catalog item or submitting a search routes to the matching page and preserves the
+  // current query state in the URL for shareable links and browser history.
   const select = (item) => navigate(itemPath(item));
   const submitSearch = () => navigate(`/search?q=${encodeURIComponent(query)}`);
 
@@ -143,6 +151,8 @@ function AppShell() {
           </header>
         )}
 
+        {/* Route definitions determine which page component appears for each URL. This keeps page
+        switching declarative and easy to follow instead of manually toggling local state. */}
         <Routes>
           <Route
             path="/"
@@ -194,10 +204,13 @@ function AppShell() {
 
 // Resolve a slug back to its matching resource entry so the detail and reader views can
 // load the correct catalog item even when URLs are generated from the human-readable title.
+// Resolve a slug back to the full resource object so detail and reader pages can render the
+// same resource content regardless of how the URL was generated.
 function findResource(slug) {
   return allResources.find((item) => itemPath(item).endsWith(slug)) || resources[0];
 }
 
+// The detail route looks up the item from the URL slug and passes it to the resource detail view.
 function DetailRoute({ onRead }) {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -212,18 +225,23 @@ function DetailRoute({ onRead }) {
   );
 }
 
+// The reader route uses the same slug lookup so the reading page displays the matching resource
+// without duplicating route-specific data.
 function ReaderRoute({ onBack }) {
   const { slug } = useParams();
 
   return <ReaderPage resource={findResource(slug)} onBack={onBack} />;
 }
 
+// SearchRoute reads the URL query string and passes the initial value into the search page.
 function SearchRoute({ onSelect }) {
   const search = new URLSearchParams(useLocation().search).get('q') || '';
 
   return <SearchPage initialQuery={search} onSelect={onSelect} />;
 }
 
+// This modal handles sign-in and sign-up flow. It updates the global auth state and then closes
+// itself after a short delay to simulate a successful account action.
 function AuthDialog({ onClose }) {
   const [mode, setMode] = useState('login');
   const [email, setEmail] = useState('');
@@ -231,6 +249,7 @@ function AuthDialog({ onClose }) {
   const { signIn } = useLibrary();
   const navigate = useNavigate();
 
+  // submit handles the form action for either login or account creation without leaving the modal.
   function submit(event) {
     event.preventDefault();
     signIn(email);
@@ -290,6 +309,8 @@ function AuthDialog({ onClose }) {
   );
 }
 
+// The root App component is intentionally minimal. It simply mounts the main shell, which keeps
+// the actual layout and routing logic in a dedicated component.
 export default function App() {
   return <AppShell />;
 }

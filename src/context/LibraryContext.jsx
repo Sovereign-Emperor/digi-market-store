@@ -11,9 +11,13 @@ import { libraryRepository } from '../lib/storage';
 // reading progress. Components can access it without prop drilling through the tree.
 const LibraryContext = createContext(null);
 
+// This provider keeps the library state in one place and exposes helper actions such as sign-in,
+// saving progress, and toggling bookmarks. Every page can read or update the same data source.
 export function LibraryProvider({ children }) {
+  // Initialize from local storage so the app restores the user's saved library state on reload.
   const [state, setState] = useState(() => libraryRepository.getState());
 
+  // refresh swaps the stored state with the latest repository snapshot after any library action.
   const refresh = useCallback((next) => setState(next), []);
   const signIn = useCallback(
     (email) => refresh(libraryRepository.signIn(email)),
@@ -40,6 +44,8 @@ export function LibraryProvider({ children }) {
     [refresh],
   );
 
+  // Expose the current state and action handlers through context so components can interact with
+  // the library without manually passing props through many levels of the tree.
   const value = useMemo(
     () => ({
       ...state,

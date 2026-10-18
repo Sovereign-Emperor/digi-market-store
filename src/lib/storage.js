@@ -1,3 +1,5 @@
+// This file manages persistent local storage for the digital library app. It stores the user,
+// saved resources, bookmarks, downloads, and reading progress so the UI can restore state on reload.
 const KEY = 'sovereign-library-v1';
 
 const defaults = { user: null, library: [], bookmarks: [], downloads: [], progress: {}, preferences: { theme: 'dark' } };
