@@ -2,7 +2,7 @@
 // saved resources, bookmarks, downloads, and reading progress so the UI can restore state on reload.
 const KEY = 'sovereign-library-v1';
 
-const defaults = { user: null, library: [], bookmarks: [], downloads: [], progress: {}, preferences: { theme: 'dark' } };
+const defaults = { user: null, library: [], bookmarks: [], downloads: [], history: [], progress: {}, preferences: { theme: 'dark', emailUpdates: true } };
 
 export function readStore() {
   try { return { ...defaults, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch { return defaults; }
@@ -25,4 +25,9 @@ export const libraryRepository = {
     return writeStore({ [name]: values });
   },
   saveProgress(id, value) { const state = readStore(); return writeStore({ progress: { ...state.progress, [id]: value } }); },
+  recordHistory(id) {
+    const state = readStore();
+    return writeStore({ history: [id, ...state.history.filter((value) => value !== id)].slice(0, 24) });
+  },
+  updatePreferences(patch) { const state = readStore(); return writeStore({ preferences: { ...state.preferences, ...patch } }); },
 };

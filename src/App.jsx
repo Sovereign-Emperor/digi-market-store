@@ -10,6 +10,7 @@ import {
 import Brand from './components/Brand';
 import SearchInput from './components/SearchInput';
 import Sidebar from './components/Sidebar';
+import CollectionPage, { CommunityPage, SettingsPage } from './components/CollectionPage';
 import Dialog from './components/ui/Dialog';
 import {
   AdminPage,
@@ -54,7 +55,7 @@ function AppShell() {
   const [query, setQuery] = useState('');
   const [authOpen, setAuthOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { user, signOut } = useLibrary();
+  const { user, signOut, recordHistory } = useLibrary();
 
   useEffect(() => {
     document.body.classList.toggle('drawer-open', sidebarOpen);
@@ -88,10 +89,21 @@ function AppShell() {
       Books: '/books',
       Courses: '/courses',
       Videos: '/video',
+      PDFs: '/pdfs',
+      'Source Code': '/source-code',
+      Templates: '/templates',
+      'AI Prompts': '/ai-prompts',
+      Tools: '/tools',
+      Store: '/store',
+      Community: '/community',
       Categories: '/categories',
       Dashboard: '/dashboard',
-      'My Library': '/dashboard',
+      'My Library': '/library',
       'Manage Resources': '/admin',
+      Bookmarks: '/bookmarks',
+      Downloads: '/downloads',
+      History: '/history',
+      Settings: '/settings',
     };
     setSidebarOpen(false);
     navigate(links[label] || '/books');
@@ -101,7 +113,7 @@ function AppShell() {
   // URL while preserving the user’s navigation flow through the catalog.
   // Clicking a catalog item or submitting a search routes to the matching page and preserves the
   // current query state in the URL for shareable links and browser history.
-  const select = (item) => navigate(itemPath(item));
+  const select = (item) => { recordHistory(item.title); navigate(itemPath(item)); };
   const submitSearch = () => navigate(`/search?q=${encodeURIComponent(query)}`);
 
   return (
@@ -183,6 +195,18 @@ function AppShell() {
           />
           <Route path="/books" element={<CatalogPage type="Books" onSelect={select} />} />
           <Route path="/courses" element={<CatalogPage type="Courses" onSelect={select} />} />
+          <Route path="/pdfs" element={<CollectionPage title="PDF Library" description="Read technical guides and reference material online." kinds={['PDF']} onSelect={select} />} />
+          <Route path="/source-code" element={<CollectionPage title="Source Code" description="Reusable projects, examples, and practical code packs." kinds={['ZIP']} onSelect={select} />} />
+          <Route path="/templates" element={<CollectionPage title="Templates" description="Start faster with adaptable project templates." onSelect={select} />} />
+          <Route path="/ai-prompts" element={<CollectionPage title="AI Prompts" description="Prompt collections for research, coding, and creative work." onSelect={select} />} />
+          <Route path="/tools" element={<CollectionPage title="Learning Tools" description="Useful utilities and curated resources for your workflow." onSelect={select} />} />
+          <Route path="/store" element={<CollectionPage title="Store" description="Premium resources, courses, and bundled collections." stateKey={null} onSelect={select} />} />
+          <Route path="/library" element={<CollectionPage title="My Library" description="Resources you have saved for ongoing learning." stateKey="library" onSelect={select} />} />
+          <Route path="/bookmarks" element={<CollectionPage title="Bookmarks" description="Resources you want to revisit later." stateKey="bookmarks" onSelect={select} />} />
+          <Route path="/downloads" element={<CollectionPage title="Downloads" description="Resources available for offline access." stateKey="downloads" onSelect={select} />} />
+          <Route path="/history" element={<CollectionPage title="History" description="Your recently opened resources." stateKey="history" onSelect={select} />} />
+          <Route path="/community" element={<CommunityPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
           <Route path="/search" element={<SearchRoute onSelect={select} />} />
           <Route
             path="/resource/:slug"

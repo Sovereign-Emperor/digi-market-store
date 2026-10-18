@@ -1,0 +1,7 @@
+.page-intro { max-width: 620px; margin: -12px 0 20px; color: #9daab0; font-size: 11px; line-height: 1.6; }
+.community-form, .settings-form { max-width: 680px; display: grid; gap: 12px; padding: 18px; border: 1px solid #1b2c35; border-radius: 8px; background: #09141b; }
+.community-form textarea { min-height: 92px; resize: vertical; border: 1px solid #2c3c45; border-radius: 5px; padding: 11px; background: #071017; color: #eef2f3; font: inherit; }
+.community-form .signup, .settings-form .signup { justify-self: start; }
+.discussion-list { display: grid; max-width: 680px; gap: 10px; }.discussion-list article { padding: 15px; border: 1px solid #1a2b34; border-radius: 7px; background: #09141b; }.discussion-list p { color: #bdc8cb; font-size: 11px; }.discussion-list small { color: #f6bd28; font-size: 10px; }
+.settings-form h2 { margin: 4px 0 0; font-size: 14px; }.settings-form label { display: flex; align-items: center; justify-content: space-between; color: #cdd5d7; }.settings-form select { min-width: 120px; padding: 7px; border: 1px solid #2b3b44; border-radius: 4px; background: #071017; color: white; }
+@media (max-width: 600px) { .community-form, .settings-form { padding: 14px; }.page-intro { margin-bottom: 15px; } }

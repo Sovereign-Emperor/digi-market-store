@@ -44,6 +44,14 @@ export function LibraryProvider({ children }) {
     (id, progress) => refresh(libraryRepository.saveProgress(id, progress)),
     [refresh],
   );
+  const recordHistory = useCallback(
+    (id) => refresh(libraryRepository.recordHistory(id)),
+    [refresh],
+  );
+  const updatePreferences = useCallback(
+    (patch) => refresh(libraryRepository.updatePreferences(patch)),
+    [refresh],
+  );
 
   // Expose the current state and action handlers through context so components can interact with
   // the library without manually passing props through many levels of the tree.
@@ -56,8 +64,10 @@ export function LibraryProvider({ children }) {
       toggleBookmark,
       download,
       saveProgress,
+      recordHistory,
+      updatePreferences,
     }),
-    [state, signIn, signOut, toggleSaved, toggleBookmark, download, saveProgress],
+    [state, signIn, signOut, toggleSaved, toggleBookmark, download, saveProgress, recordHistory, updatePreferences],
   );
 
   return <LibraryContext.Provider value={value}>{children}</LibraryContext.Provider>;
