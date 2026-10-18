@@ -6,6 +6,8 @@ import { useLibrary } from '../context/LibraryContext';
 import EmptyState from './ui/EmptyState';
 import ProgressBar from './ui/ProgressBar';
 
+// TODO(pages): Split each exported page into src/pages once page-specific logic grows further.
+
 // This is the home page for the digital library. It combines a hero banner, category buttons,
 // trending items, and a quick search so users can start exploring immediately.
 export function LandingPage({ onNavigate, onSelect }) {

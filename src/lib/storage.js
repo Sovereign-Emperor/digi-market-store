@@ -15,6 +15,8 @@ export function writeStore(patch) {
 }
 
 export const libraryRepository = {
+  // TODO(backend): Keep this interface, but replace localStorage internals with a
+  // Supabase repository so components do not need to be rewritten.
   getState: readStore,
   signIn(email) { return writeStore({ user: { name: email.split('@')[0] || 'Learner', email } }); },
   signOut() { return writeStore({ user: null }); },

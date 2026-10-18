@@ -14,6 +14,7 @@ const LibraryContext = createContext(null);
 // This provider keeps the library state in one place and exposes helper actions such as sign-in,
 // saving progress, and toggling bookmarks. Every page can read or update the same data source.
 export function LibraryProvider({ children }) {
+  // TODO(auth): Hydrate the signed-in backend session and user-specific resource state here.
   // Initialize from local storage so the app restores the user's saved library state on reload.
   const [state, setState] = useState(() => libraryRepository.getState());
 

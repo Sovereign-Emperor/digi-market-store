@@ -48,6 +48,7 @@ const itemPath = (item) =>
 // The app shell builds the overall layout: sidebar, header, routed content area, and auth
 // overlay. It keeps the main navigation and page rendering logic in one place.
 function AppShell() {
+  // TODO(routes): Move route definitions into a dedicated routes module when more pages are added.
   const navigate = useNavigate();
   const location = useLocation();
   const [query, setQuery] = useState('');
