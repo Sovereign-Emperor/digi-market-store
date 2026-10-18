@@ -4,7 +4,7 @@ import Section from './Section';
 import { categories, newArrivals, resources } from '../data/library';
 import { useLibrary } from '../context/LibraryContext';
 import EmptyState from './ui/EmptyState';
-import ProgressBar from './ui/ProgressBar';
+import CoursePlayer from './CoursePlayer';
 
 // TODO(pages): Split each exported page into src/pages once page-specific logic grows further.
 
@@ -345,67 +345,11 @@ export function ReaderPage({ resource, onBack }) {
 // VideoPage renders a mock course-player layout. It allows lesson selection and play/pause
 // toggling while simulating progress updates for a learner following a course sequence.
 export function VideoPage({ onBack }) {
-  // Video lessons track playback progress separately from book progress so the learner can
-  // keep their place in course content without interfering with reading sessions.
-  const { progress, saveProgress } = useLibrary();
-  const [playing, setPlaying] = useState(false);
-  const [lesson, setLesson] = useState(0);
   const lessons = [
-    'Introduction',
-    'Python Setup',
-    'Variables and Types',
-    'Operators',
-    'Control Flow',
-    'Functions',
-    'Lists and Tuples',
-    'Dictionaries',
-  ];
-  const progressValue = progress['python-video'] || 18;
-
-  const play = () => {
-    setPlaying((value) => !value);
-    saveProgress('python-video', Math.min(100, progressValue + 5));
-  };
-
-  return (
-    <div className="video-page">
-      <header className="video-header">
-        <button onClick={onBack}>← Back</button>
-        <div>
-          <span>Video Lesson</span>
-          <b>{lessons[lesson]}</b>
-        </div>
-        <button onClick={play}>{playing ? 'Pause' : 'Play'}</button>
-      </header>
-
-      <div className="video-layout">
-        <aside className="video-sidebar">
-          {lessons.map((item, index) => (
-            <button
-              key={item}
-              className={index === lesson ? 'active' : ''}
-              onClick={() => setLesson(index)}
-            >
-              {index + 1}. {item}
-            </button>
-          ))}
-        </aside>
-
-        <div className="video-player">
-          <div className="video-screen">{playing ? '▶' : '◼'}</div>
-          <ProgressBar value={progressValue} />
-          <div className="video-controls">
-            <button onClick={() => setLesson((value) => (value > 0 ? value - 1 : value))}>
-              Previous
-            </button>
-            <button onClick={() => setLesson((value) => (value < lessons.length - 1 ? value + 1 : value))}>
-              Next
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    ['Introduction', '05:24'], ['Python Setup', '08:15'], ['Variables and Types', '12:45'], ['Operators', '10:30'],
+    ['Control Flow', '15:20'], ['Functions', '18:41'], ['Lists and Tuples', '16:25'], ['Dictionaries', '14:10'],
+  ].map(([title, duration]) => ({ title, duration }));
+  return <CoursePlayer courseId="python-video" title="Python for Beginners — Full Course" accent="🐍" lessons={lessons} onBack={onBack} />;
 }
 
 // SearchPage gives users a dedicated search screen where they can narrow results by keyword and

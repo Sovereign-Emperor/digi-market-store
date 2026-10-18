@@ -7,6 +7,7 @@ import '../assets/style.css';
 import './app.css';
 import './responsive.css';
 import './collections.css';
+import './course-player.css';
 
 // Application bootstrap: mount the React app into the root element and wrap it with
 // the router and shared library context so all pages can share state and navigation.
