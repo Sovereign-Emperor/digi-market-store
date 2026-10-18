@@ -52,6 +52,7 @@ function AppShell() {
   const location = useLocation();
   const [query, setQuery] = useState('');
   const [authOpen, setAuthOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, signOut } = useLibrary();
 
   // Reader pages use a full-screen layout without the app shell chrome, so we switch
@@ -86,6 +87,7 @@ function AppShell() {
       'My Library': '/dashboard',
       'Manage Resources': '/admin',
     };
+    setSidebarOpen(false);
     navigate(links[label] || '/books');
   };
 
@@ -99,6 +101,7 @@ function AppShell() {
   return (
     <div className={readerMode ? 'reader-shell' : 'app-shell'}>
       {!readerMode && (
+        <>
         <Sidebar
           primaryItems={[...primaryNavigation, ['▦', 'Categories']]}
           accountItems={[
@@ -108,13 +111,23 @@ function AppShell() {
           ]}
           activeItem={activeItem}
           onNavigate={navigation}
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
         />
+        {sidebarOpen && (
+          <button
+            className="sidebar-scrim"
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Close navigation"
+          />
+        )}
+        </>
       )}
 
       <main className={readerMode ? 'reader-main' : ''}>
         {!readerMode && (
           <header className="topbar">
-            <button className="menu" aria-label="Open menu">
+            <button className="menu" onClick={() => setSidebarOpen(true)} aria-label="Open navigation">
               ☰
             </button>
             <div className="mobile-brand">
